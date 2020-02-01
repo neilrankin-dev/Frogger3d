@@ -5,15 +5,19 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     public GameObject showFrog;
+    public bool isActivated = false;
+
     GameManager gameManager;
     PlayerManager playerManager;
-    public bool isActivated = false;
+    AudioSource goalAudio;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         playerManager = FindObjectOfType<PlayerManager>();
+        goalAudio = GetComponent<AudioSource>();
     }
 
 
@@ -21,6 +25,7 @@ public class Goal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && !isActivated)
         {
+            goalAudio.Play();
             isActivated = true;
             showFrog.SetActive(true);
             gameManager.UpdateScore(500);

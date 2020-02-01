@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     GameManager gameManager;
     AnimatePlayer animatePlayer;
     public bool isDead = false;
+    public GameObject deathMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +23,12 @@ public class PlayerManager : MonoBehaviour
     {
         if (isDead)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && gameManager.playerLives > 0)
             {
                 animatePlayer.StartAnimate();
                 ResetPlayerPos();
                 isDead = false;
+                deathMenu.SetActive(false);
             }
         }
     }
@@ -38,6 +40,11 @@ public class PlayerManager : MonoBehaviour
             gameManager.LoseLife();
             isDead = true;
             animatePlayer.AnimateDeath();
+
+            if (gameManager.playerLives > 0)
+            {
+                deathMenu.SetActive(true);
+            }
         }
     }
 
