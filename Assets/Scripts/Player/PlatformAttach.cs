@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlatformAttach : MonoBehaviour
 {
-    bool isAttached = false;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

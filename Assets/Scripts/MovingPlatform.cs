@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField]
-    private enum PlatformDirection {WEST, EAST}
+    public enum PlatformDirection {WEST, EAST}
 
-    [SerializeField]
-    private PlatformDirection platformDirection;
+    public PlatformDirection platformDirection;
 
     [SerializeField]
     private float movementSpeed = 5f;

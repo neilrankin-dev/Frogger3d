@@ -8,64 +8,50 @@ public class PlayerMovement : MonoBehaviour
     public PlayerDirection playerDirection;
 
     public float movementSpeed = 5f;
-    Quaternion resetRotation = new Quaternion(0, 0, 0, 0);
+    GameManager gameManager;
+    PlayerManager playerManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        if (!playerManager.isDead)
+        {
+            PlayerMovementHandler();
+        }
+
+    }
+
+    void PlayerMovementHandler()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
 
         if (verticalMovement > 0 && horizontalMovement == 0)
         {
+            gameManager.UpdateScore(1);
             transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-
-            if (playerDirection != PlayerDirection.NORTH)
-            {
-                playerDirection = PlayerDirection.NORTH;
-                transform.rotation = resetRotation;
-            }
         }
         if (verticalMovement < 0 && horizontalMovement == 0)
         {
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-
-            if (playerDirection != PlayerDirection.SOUTH)
-            {
-                playerDirection = PlayerDirection.SOUTH;
-                transform.rotation = resetRotation;
-                transform.Rotate(0, -180, 0);
-            }
+            gameManager.UpdateScore(-1);
+            transform.Translate(-Vector3.forward * movementSpeed * Time.deltaTime);
         }
 
         if (horizontalMovement > 0 && verticalMovement == 0)
         {
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-            if (playerDirection != PlayerDirection.EAST)
-            {
-                playerDirection = PlayerDirection.EAST;              
-                transform.rotation = resetRotation;
-                transform.Rotate(0, 90, 0);
-            }
+            transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
         }
 
         if (horizontalMovement < 0 && verticalMovement == 0)
         {
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-
-            if (playerDirection != PlayerDirection.WEST)
-            {
-                playerDirection = PlayerDirection.WEST;
-                transform.rotation = resetRotation;
-                transform.Rotate(0, -90, 0);
-            }
+            transform.Translate(-Vector3.right * movementSpeed * Time.deltaTime);
         }
-
     }
 }
